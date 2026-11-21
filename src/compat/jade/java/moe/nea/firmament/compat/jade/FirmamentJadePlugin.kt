@@ -16,6 +16,7 @@ class FirmamentJadePlugin : IWailaPlugin {
 	override fun registerClient(registration: IWailaClientRegistration) {
 		registration.registerBlockComponent(CustomMiningHardnessProvider, Block::class.java)
 		registration.registerBlockComponent(DrillToolProvider(), Block::class.java)
+		registration.addTooltipCollectedCallback { root, _ -> root.addProgressProvider(-100, FirmamentProgressProvider.INSTANCE) }
 		registration.addRayTraceCallback(CustomFakeBlockProvider(registration))
 	}
 }
