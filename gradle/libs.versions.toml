@@ -103,7 +103,7 @@ rei_dev_fabric = { module = "com.github.shedaniel.roughlyenoughitems:RoughlyEnou
 jspecify = { module = "org.jspecify:jspecify", version = "1.0.0" }
 jbAnnotations = { module = "org.jetbrains:annotations", version = "26.1.0" }
 
-moulconfig = { module = "org.notenoughupdates.moulconfig:modern-26.2", version.ref = "moulconfig" }
+moulconfig = { module = "org.notenoughupdates.moulconfig:modern-26.3", version.ref = "moulconfig" }
 repoparser = { module = "moe.nea:neurepoparser", version.ref = "neurepoparser" }
 mixinextras = { module = "io.github.llamalad7:mixinextras-fabric", version.ref = "mixinextras" }
 nealisp = { module = "moe.nea:nealisp", version.ref = "nealisp" }
