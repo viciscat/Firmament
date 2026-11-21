@@ -247,7 +247,7 @@ dependencies {
 
 	annotationProcessor(libs.mixinextras)
 	implementation(libs.mixinextras)
-	include(libs.mixinextras)
+	//include(libs.mixinextras)
 
 	implementation(libs.nealisp)
 	shadowMe(libs.nealisp)

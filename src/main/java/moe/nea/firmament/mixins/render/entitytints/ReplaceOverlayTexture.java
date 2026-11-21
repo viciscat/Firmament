@@ -1,7 +1,7 @@
 package moe.nea.firmament.mixins.render.entitytints;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 
 import moe.nea.firmament.events.EntityRenderTintEvent;
 import net.minecraft.client.renderer.rendertype.RenderSetup;

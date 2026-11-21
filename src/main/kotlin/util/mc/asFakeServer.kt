@@ -6,6 +6,8 @@ import kotlin.contracts.contract
 import net.minecraft.commands.CommandSource
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.Component
+import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.permissions.PermissionSet
 
 fun FabricClientCommandSource.asFakeServer(): CommandSourceStack {
@@ -32,8 +34,6 @@ fun FabricClientCommandSource.asFakeServer(): CommandSourceStack {
 		source.rotation,
 		smuggleNull(),
 		PermissionSet.NO_PERMISSIONS,
-		"FakeServerCommandSource",
-		Component.literal("FakeServerCommandSource"),
 		smuggleNull(),
 		source.player
 	)

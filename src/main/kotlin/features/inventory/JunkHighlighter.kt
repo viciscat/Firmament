@@ -1,6 +1,6 @@
 package moe.nea.firmament.features.inventory
 
-import org.lwjgl.glfw.GLFW
+import com.mojang.blaze3d.platform.InputConstants
 import moe.nea.firmament.annotations.Subscribe
 import moe.nea.firmament.events.SlotRenderEvents
 import moe.nea.firmament.util.data.Config
@@ -17,7 +17,7 @@ object JunkHighlighter {
 	@Config
 	object TConfig : ManagedConfig(identifier, Category.INVENTORY) {
 		val junkRegex by string("regex") { "" }
-		val highlightBind by keyBinding("highlight") { GLFW.GLFW_KEY_LEFT_CONTROL }
+		val highlightBind by keyBinding("highlight") { InputConstants.KEY_LCONTROL }
 	}
 
 	@OptIn(RequiresComponents::class)

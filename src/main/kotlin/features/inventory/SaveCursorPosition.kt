@@ -1,6 +1,5 @@
 package moe.nea.firmament.features.inventory
 
-import org.lwjgl.glfw.GLFW
 import kotlin.math.absoluteValue
 import kotlin.time.Duration.Companion.milliseconds
 import com.mojang.blaze3d.platform.InputConstants
@@ -43,9 +42,8 @@ object SaveCursorPosition {
 			(lastPosition.middle.first - middleX).absoluteValue < 1 &&
 			(lastPosition.middle.second - middleY).absoluteValue < 1
 		) {
-			InputConstants.grabOrReleaseMouse(
+			InputConstants.grabMouse(
 				MC.window,
-				InputConstants.CURSOR_NORMAL,
 				lastPosition.cursor.first,
 				lastPosition.cursor.second
 			)

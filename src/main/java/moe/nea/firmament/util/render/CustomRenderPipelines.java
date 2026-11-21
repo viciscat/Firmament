@@ -2,19 +2,17 @@ package moe.nea.firmament.util.render;
 
 import java.util.Optional;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.pipeline.BindGroupLayout;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.ColorTargetState;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import moe.nea.firmament.Firmament;
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.RenderPipelines;
 
 public class CustomRenderPipelines {
-	public static final RenderPipeline GUI_TEXTURED_NO_DEPTH_TRIANGLES = RenderPipeline.builder(RenderPipelines.GUI_TEXTURED_SNIPPET)
+	public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXTURED_NO_DEPTH_TRIANGLES = RenderPipeline.builder(RenderPipelines.GUI_TEXTURED_SNIPPET)
 		.withLocation(Firmament.identifier("gui_textured_overlay_tris"))
 		.withVertexBinding(0, DefaultVertexFormat.POSITION_TEX_COLOR)
 		.withPrimitiveTopology(PrimitiveTopology.TRIANGLES)

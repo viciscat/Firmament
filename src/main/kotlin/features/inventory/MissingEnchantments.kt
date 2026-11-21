@@ -2,7 +2,7 @@
 // Check status at https://github.com/NotEnoughUpdates/NotEnoughUpdates-REPO/issues/2311
 package moe.nea.firmament.features.inventory
 
-import org.lwjgl.glfw.GLFW
+import com.mojang.blaze3d.platform.InputConstants
 import kotlin.jvm.optionals.getOrNull
 import net.minecraft.network.chat.Component
 import moe.nea.firmament.annotations.Subscribe
@@ -29,7 +29,7 @@ object MissingEnchantments {
 	@Config
 	object TConfig : ManagedConfig("missing-enchantments", Category.INVENTORY) {
 		val enabled by toggle("enabled") { true }
-		val enableKeybinding by keyBinding("show-missing-enchantments") { GLFW.GLFW_KEY_LEFT_SHIFT }
+		val enableKeybinding by keyBinding("show-missing-enchantments") { InputConstants.KEY_LSHIFT }
 		val showUpgradableEnchantments by toggle("show-upgradable-enchantments") { false }
 		val showConflictingEnchantments by toggle("show-conflicting-enchantments") { false }
 	}

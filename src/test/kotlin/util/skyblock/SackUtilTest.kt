@@ -13,7 +13,9 @@ class SackUtilTest {
 			listOf(
 				SackUtil.SackUpdate(SkyBlockItems.ROTTEN_FLESH, "Rotten Flesh", 1)
 			),
-			SackUtil.getUpdatesFromMessage(ItemResources.loadText("sacks/gain-rotten-flesh"))
+			SackUtil.getUpdatesFromMessage(
+				ItemResources.loadText("sacks/gain-rotten-flesh")
+			)
 		)
 	}
 

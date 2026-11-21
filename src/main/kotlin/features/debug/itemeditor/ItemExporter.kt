@@ -16,8 +16,8 @@ import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.core.ClientAsset
 import net.minecraft.nbt.StringTag
 import net.minecraft.network.chat.Component
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.item.AxeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -246,7 +246,7 @@ object ItemExporter {
 		if (skyblockID.contains("SACK") || skyblockID.contains("FISHING_NET")) {
 			warn("modified by attributes")
 		}
-		if (vanillaItem is AxeItem && lore.any {
+		if (itemStack.`is`(ItemTags.AXES) && lore.any {
 				it.unformattedString.contains("Damage") || it.unformattedString.contains("Strength") }) {
 			warn("modified by essence perk")
 		}

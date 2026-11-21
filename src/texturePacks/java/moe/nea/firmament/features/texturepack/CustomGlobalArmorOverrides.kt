@@ -135,7 +135,8 @@ object CustomGlobalArmorOverrides {
 				mapOf(
 					EquipmentClientInfo.LayerType.HUMANOID to equipmentLayers,
 					EquipmentClientInfo.LayerType.HUMANOID_LEGGINGS to equipmentLayers,
-				)
+				),
+				listOf()
 			)
 			return identifier
 		} else {

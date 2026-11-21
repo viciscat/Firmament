@@ -402,7 +402,7 @@ class StorageOverlayScreen : Screen(Component.literal("")) {
 				controlComponent,
 				measurements.controlX, measurements.controlY,
 				CONTROL_WIDTH, CONTROL_HEIGHT,
-				KeyboardEvent.KeyPressed(input.input(), input.scancode, false)
+				KeyboardEvent.KeyPressed(input.input(), input.keycode, false)
 			)
 		) {
 			return true
@@ -419,7 +419,7 @@ class StorageOverlayScreen : Screen(Component.literal("")) {
 				controlComponent,
 				measurements.controlX, measurements.controlY,
 				CONTROL_WIDTH, CONTROL_HEIGHT,
-				KeyboardEvent.KeyPressed(input.input(), input.scancode, true)
+				KeyboardEvent.KeyPressed(input.input(), input.keycode, true)
 			)
 		) {
 			return true

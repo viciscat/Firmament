@@ -1,6 +1,6 @@
 package moe.nea.firmament.util.mc
 
-import org.lwjgl.glfw.GLFW
+import com.mojang.blaze3d.platform.InputConstants
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.inventory.ContainerInput
@@ -11,7 +11,7 @@ object SlotUtils {
 		MC.interactionManager?.handleContainerInput(
 			handler.containerId,
 			this.index,
-			GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
+			InputConstants.MOUSE_BUTTON_MIDDLE,
 			ContainerInput.CLONE,
 			MC.player!!
 		)
@@ -29,7 +29,7 @@ object SlotUtils {
 		MC.interactionManager?.handleContainerInput(
 			handler.containerId,
 			this.index,
-			GLFW.GLFW_MOUSE_BUTTON_RIGHT,
+			InputConstants.MOUSE_BUTTON_RIGHT,
 			ContainerInput.PICKUP,
 			MC.player!!
 		)
@@ -39,7 +39,7 @@ object SlotUtils {
 		MC.interactionManager?.handleContainerInput(
 			handler.containerId,
 			this.index,
-			GLFW.GLFW_MOUSE_BUTTON_LEFT,
+			InputConstants.MOUSE_BUTTON_LEFT,
 			ContainerInput.PICKUP,
 			MC.player!!
 		)
