@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: CC0-1.0
 import org.jetbrains.kotlin.konan.properties.loadProperties
+import java.util.Properties
 
 plugins {
 	`kotlin-dsl`
@@ -9,8 +10,10 @@ plugins {
 }
 
 repositories {
-	loadProperties(project.file("../gradle/repositories.properties").absolutePath)
-		.forEach { (propName, propUrl) ->
+	val props = Properties()
+	file("../gradle/repositories.properties").reader()
+		.use(props::load)
+	props.forEach { (propName, propUrl) ->
 			maven {
 				this.name = propName as String
 				this.url = uri(propUrl)

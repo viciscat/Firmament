@@ -63,9 +63,9 @@ kotlin {
 }
 fun String.capitalizeN() = replaceFirstChar { it.uppercaseChar() }
 // Usually a normal sync takes care of this, but in CI everything needs to run in one shot, so we need to improvise.
-val unpackAllJars by tasks.registering
+val unpackAllJars = tasks.register("unpackAllJars")
 fun innerJarsOf(name: String, dependency: Dependency): Provider<FileTree> {
-	val task = tasks.create("unpackInnerJarsFor${name.capitalizeN()}", InnerJarsUnpacker::class) {
+	val task = tasks.register<InnerJarsUnpacker>("unpackInnerJarsFor${name.capitalizeN()}") {
 		this.inputJars.setFrom(files(configurations.detachedConfiguration(dependency)))
 		this.outputDir.set(layout.buildDirectory.dir("unpackedJars/$name").also {
 			it.get().asFile.mkdirs()
@@ -77,7 +77,7 @@ fun innerJarsOf(name: String, dependency: Dependency): Provider<FileTree> {
 	}
 }
 
-val collectTranslations by tasks.registering(CollectTranslations::class) {
+val collectTranslations = tasks.register<CollectTranslations>("collectTranslations") {
 	this.baseTranslations.from(file("translations/en_us.json"))
 	this.baseTranslations.from(file("translations/extra.json"))
 	this.classes.from(sourceSets.main.get().kotlin.classesDirectory)
@@ -169,7 +169,7 @@ val SourceSet.modRuntimeOnlyConfigurationName
 	get() =
 		this.runtimeOnlyConfigurationName
 
-val shadowMe by configurations.creating {
+val shadowMe = configurations.create("shadowMe") {
 	exclude(group = "org.jetbrains.kotlin")
 	exclude(group = "org.jetbrains.kotlinx")
 	exclude(group = "org.jetbrains")
@@ -177,9 +177,9 @@ val shadowMe by configurations.creating {
 	exclude(group = "org.slf4j")
 }
 
-val hotswap by configurations.creating {}
+val hotswap = configurations.create("hotswap") {}
 
-val testAgent by configurations.creating {}
+val testAgent = configurations.create("testAgent") {}
 
 fabricApi.configureTests {
 	createSourceSet.set(true)
@@ -188,7 +188,7 @@ fabricApi.configureTests {
 	eula.set(true)
 	username.set("CoolGuy123")
 }
-val gameTestSourceSet by sourceSets.named("gametest") {
+val gameTestSourceSet = sourceSets.named("gametest") {
 	configurations.named(compileClasspathConfigurationName).extendsFrom(configurations.testCompileClasspath)
 	configurations.named(runtimeClasspathConfigurationName).extendsFrom(configurations.testRuntimeClasspath)
 }
@@ -290,30 +290,31 @@ loom {
 	runs {
 		removeIf { it.name == "server" }
 		configureEach {
-			property("fabric.log.level", "info")
-			property("firmament.debug", "true")
-			property(
+
+			systemProperties.put("fabric.log.level", "info")
+			systemProperties.put("firmament.debug", "true")
+			systemProperties.put(
 				"firmament.classroots",
 				compatSourceSets.joinToString(File.pathSeparator) {
 					File(it.output.classesDirs.asPath).absolutePath
 				})
-			property("mixin.debug.export", "true")
-//			property("mixin.debug", "true")
+			systemProperties.put("mixin.debug.export", "true")
+//			systemProperties.put("mixin.debug", "true")
 
 			parseEnvFile(file(".env")).forEach { (t, u) ->
-				environmentVariable(t, u)
+				environmentVars.put(t, u)
 			}
 			parseEnvFile(file(".properties")).forEach { (t, u) ->
-				property(t, u)
+				systemProperties.put(t, u)
 			}
 		}
 		named("client") {
-			property("devauth.enabled", "true")
-			vmArg("-ea")
+			systemProperties.put("devauth.enabled", "true")
+			jvmArguments.add("-ea")
 			if (project.findProperty("firmament.useHotswap") == "true") {
-				vmArg("-XX:+AllowEnhancedClassRedefinition")
-				vmArg("-XX:HotswapAgent=external")
-				vmArg("-javaagent:${hotswap.resolve().single().absolutePath}")
+				jvmArguments.add("-XX:+AllowEnhancedClassRedefinition")
+				jvmArguments.add("-XX:HotswapAgent=external")
+				jvmArguments.add("-javaagent:${hotswap.resolve().single().absolutePath}")
 			}
 		}
 	}
@@ -324,11 +325,11 @@ mcAutoTranslations {
 	translationFunctionResolved.set("moe.nea.firmament.util.trResolved")
 }
 
-val downloadTestRepo by tasks.registering(RepoDownload::class) {
+val downloadTestRepo = tasks.register<RepoDownload>("downloadTestRepo") {
 	this.hash.set(project.property("firmament.compiletimerepohash") as String)
 }
 
-val updateTestRepo by tasks.registering {
+val updateTestRepo = tasks.register("updateTestRepo") {
 	outputs.upToDateWhen { false }
 	doLast {
 		val propertiesFile = rootProject.file("gradle.properties")
