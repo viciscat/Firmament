@@ -13,9 +13,9 @@ data class SavedKeyBinding(
 
 		fun unbound(): SavedKeyBinding = withoutMods(GenericInputButton.unbound())
 		fun withoutMods(input: GenericInputButton) = SavedKeyBinding(input, InputModifiers.none())
-		fun keyWithoutMods(keyCode: Int): SavedKeyBinding = withoutMods(GenericInputButton.ofKeyCode(keyCode))
+		fun keyWithoutMods(keyCode: Int): SavedKeyBinding = withoutMods(GenericInputButton.ofScanCode(keyCode))
 		fun keyWithMods(keyCode: Int, mods: InputModifiers) =
-			SavedKeyBinding(GenericInputButton.ofKeyCode(keyCode), mods)
+			SavedKeyBinding(GenericInputButton.ofScanCode(keyCode), mods)
 	}
 
 	fun isPressed(atLeast: Boolean = false): Boolean {

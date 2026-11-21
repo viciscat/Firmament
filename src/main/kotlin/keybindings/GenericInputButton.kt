@@ -63,16 +63,14 @@ sealed interface GenericInputButton {
 	companion object {
 
 		fun of(event: KeyEvent) = ofKeyAndScan(event.keycode(), event.input())
-		fun escape() = ofKeyCode(InputConstants.KEY_ESCAPE)
+		fun escape() = ofScanCode(InputConstants.KEY_ESCAPE)
 		fun ofKeyCode(keyCode: Int): GenericInputButton = KeyCodeButton(keyCode)
 		fun ofScanCode(scanCode: Int): GenericInputButton = ScanCodeButton(scanCode)
 		fun ofScanCodeFromKeyCode(keyCode: Int): GenericInputButton = ScanCodeButton(SDLKeyboard.nSDL_GetScancodeFromKey(keyCode, 0))
 		fun unbound(): GenericInputButton = Unbound
 		fun mouse(mouseButton: Int): GenericInputButton = MouseButton(mouseButton)
 		fun ofKeyAndScan(keyCode: Int, scanCode: Int): GenericInputButton {
-			if (keyCode == InputConstants.UNKNOWN.value)
-				return ofScanCode(scanCode)
-			return ofKeyCode(keyCode) // TODO: should i always upgrade to a scanCode?
+			return ofScanCode(scanCode)
 		}
 	}
 

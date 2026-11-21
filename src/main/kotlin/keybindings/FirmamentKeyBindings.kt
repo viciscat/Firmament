@@ -16,7 +16,7 @@ object FirmamentKeyBindings {
 		val vanillaKeyBinding = KeyMapping(
 			name,
 			InputConstants.Type.KEYBOARD,
-			-1,
+			0,
 			cats.computeIfAbsent(config.element.category) {
 				KeyMapping.Category.register(Firmament.identifier(it.name.lowercase()))
 			}
