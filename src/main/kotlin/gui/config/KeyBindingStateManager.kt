@@ -117,8 +117,8 @@ class KeyBindingStateManager(
 				if (event is KeyboardEvent.KeyPressed) {
 					return this@KeyBindingStateManager.keyboardEvent(
 						GenericInputButton.ofKeyAndScan(
-							event.keycode,
-							event.scancode
+							event.scancode,
+							event.keycode
 						), event.pressed
 					)
 				}
