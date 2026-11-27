@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.renderpearl.api.textures.FilterMode
 import org.joml.Matrix4f
 import net.minecraft.client.gui.Font
-import com.mojang.blaze3d.vertex.VertexConsumer
 import net.minecraft.client.gui.font.TextRenderable
 import net.minecraft.client.gui.render.TextureSetup
 import net.minecraft.client.renderer.RenderPipelines
@@ -39,31 +38,29 @@ class FacingThePlayerContext(val worldContext: RenderInWorldContext) {
             worldContext.matrixStack.pushPose()
             val width = MC.font.width(text)
             worldContext.matrixStack.translate(-width / 2F, verticalAlign.align(index, texts.size), 0F)
-            val vertexConsumer: VertexConsumer =
-                CustomRenderer.getBuffer(RenderPipelines.TEXT_SEE_THROUGH)
-            val matrix4f = worldContext.matrixStack.last().pose()
-            vertexConsumer.addVertex(matrix4f, -1.0f, -1.0f, 0.0f).setColor(background)
-                .setLight(LightCoordsUtil.FULL_BRIGHT)
-            vertexConsumer.addVertex(matrix4f, -1.0f, MC.font.lineHeight.toFloat(), 0.0f).setColor(background)
-                .setLight(LightCoordsUtil.FULL_BRIGHT)
-            vertexConsumer.addVertex(matrix4f, width.toFloat(), MC.font.lineHeight.toFloat(), 0.0f)
-                .setColor(background)
-                .setLight(LightCoordsUtil.FULL_BRIGHT)
-            vertexConsumer.addVertex(matrix4f, width.toFloat(), -1.0f, 0.0f).setColor(background)
-                .setLight(LightCoordsUtil.FULL_BRIGHT)
-            worldContext.matrixStack.translate(0F, 0F, 0.01F)
 
-			val prepared = MC.font.prepareText(text.visualOrderText, 0f, 0f, CommonColors.WHITE, false, false, 0);
-            prepared.visit(object : Font.GlyphVisitor {
-				override fun acceptRenderable(glyph : TextRenderable) {
-					val setup = TextureSetup.singleTextureWithLightmap(glyph.textureView(), RenderSystem.getSamplerCache().getClampToEdge(
-						FilterMode.NEAREST));
+            val matrix4f = worldContext.matrixStack.last().pose()
+			val visitor = object : Font.GlyphVisitor {
+				override fun acceptRenderable(glyph: TextRenderable) {
+					val setup = TextureSetup.singleTextureWithLightmap(
+						glyph.textureView(), RenderSystem.getSamplerCache().getClampToEdge(
+							FilterMode.NEAREST
+						)
+					);
 					// will probably not work with caxton but whatever at least it works with TTF font resource packs
-					val buffer = CustomRenderer.getBuffer(if (glyph.guiPipeline() == RenderPipelines.GUI_TEXT_GRAYSCALE) RenderPipelines.TEXT_GRAYSCALE_SEE_THROUGH else RenderPipelines.TEXT_SEE_THROUGH, setup);
+					val buffer = CustomRenderer.getBuffer(
+						if (glyph.guiPipeline() == RenderPipelines.GUI_TEXT_GRAYSCALE) RenderPipelines.TEXT_GRAYSCALE_SEE_THROUGH else RenderPipelines.TEXT_SEE_THROUGH,
+						setup
+					);
 
 					glyph.render(matrix4f, buffer, LightCoordsUtil.FULL_BRIGHT, false);
 				}
-			});
+			}
+			visitor.acceptRenderable(MC.font.prepareBackground(-1f, -1f, width.toFloat(), MC.font.lineHeight.toFloat(), background))
+			worldContext.matrixStack.translate(0F, 0F, 0.01F)
+
+			val prepared = MC.font.prepareText(text.visualOrderText, 0f, 0f, CommonColors.WHITE, false, false, 0);
+			prepared.visit(visitor);
             worldContext.matrixStack.popPose()
         }
     }
